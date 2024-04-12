@@ -21,7 +21,7 @@ public class CreateOrderTest {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         orderClient = new OrderClient();
         userClient = new UserClient();
-        userData = new UserData("kadabra@yandex.ru", "magic", "Fiona");
+        userData = new UserData("magenta@yandex.ru", "yellow", "Alex");
         userClient.create(userData);
     }
     @Step("Send POST request to /api/auth/login to login user")
@@ -41,13 +41,11 @@ public class CreateOrderTest {
         return orderClient.createWithAuth(accessToken, orderData);
     }
     @Step("Send POST request to /api/orders without authorization and with ingredients to create order")
-    //ответ 200 + succes: true, name бургера, order: number: 76667
     public Response sendPostRequestWithoutAuthToCreateOrder(OrderData orderData) {
         orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         return orderClient.createNoAuth(orderData);
     }
     @Step("Send POST request to /api/orders with authorization and without ingredients to create order")
-    // status 400 + message: Ingredient ids must be provided
     public Response sendPostRequestWithAuthNoIngredientsToCreateOrder(String accessToken, OrderData orderData) {
         orderData = new OrderData(new String[]{});
         return orderClient.createWithAuth(accessToken, orderData);
@@ -61,11 +59,6 @@ public class CreateOrderTest {
     public Response sendPostRequestWithAuthAndInvalidHashIngredientsToCreateOrder(String accessToken, OrderData orderData) {
         orderData = new OrderData(new String[]{"61c075738", "610000000000", "61c088888872"});
         return orderClient.createWithAuth(accessToken, orderData);
-    }
-    @Step("Send POST request to /api/orders without authorization and with invalid hash of ingredients")
-    public Response sendPostRequestWithoutAuthAndWithInvalidHashIngredientToCreateOrder(OrderData orderData) {
-        orderData = new OrderData(new String[]{"61c0aaaaaaaaaaaaaaaaaa6d", "61000000000000001bdaaa71", "61c0c5a78888888888888872"});
-        return orderClient.createNoAuth(orderData);
     }
     @Step("Check 200 status code for successful create order")
     public void check200StatusCodeForSuccessfulCreateOrder(Response response) {

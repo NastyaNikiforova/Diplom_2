@@ -20,7 +20,7 @@ public class LoginUserTest {
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         userClient = new UserClient();
-        userData = new UserData("kadabra@yandex.ru", "magic", "Fiona");
+        userData = new UserData("magenta@yandex.ru", "yellow", "Alex");
         userClient.create(userData);
     }
     @Step("Send POST request to /api/auth/login to login existing user")
@@ -29,7 +29,7 @@ public class LoginUserTest {
     }
     @Step("Send POST request to /api/auth/login to login with an invalid data")
     public Response sendPostRequestToLoginWithInvalidData() {
-        userData = new UserData("kadabra@mail.ru", "", "Fiona");
+        userData = new UserData("magenta@yandex.ru", "", "Alex");
         return userClient.login(userData);
     }
     @Step("Check 200 status code for successful login")

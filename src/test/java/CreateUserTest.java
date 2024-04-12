@@ -20,7 +20,7 @@ public class CreateUserTest {
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         userClient = new UserClient();
-        userData = new UserData("kadabra@yandex.ru", "magic", "Fiona");
+        userData = new UserData("magenta@yandex.ru", "yellow", "Alex");
     }
     @Step("Send POST request to /api/auth/register to create new user with all required parameters")
     public Response sendPostRequestToCreateUserAllParams() {
@@ -28,7 +28,7 @@ public class CreateUserTest {
     }
     @Step("Send POST request to /api/auth/register to create new user without a required parameter")
     public Response sendPostRequestToCreateUserNotAllParams() {
-        userData = new UserData("kadabra@yandex.ru", "", "Fiona");
+        userData = new UserData("magenta@yandex.ru", "", "Alex");
         return userClient.create(userData);
     }
     @Step("Send POST request to /api/auth/login to login user")

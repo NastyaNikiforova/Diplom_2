@@ -17,7 +17,7 @@ public class UpdateUserDataTest {
     public void setUp() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         userClient = new UserClient();
-        userData = new UserData("kadabra@yandex.ru", "magic", "Fiona");
+        userData = new UserData("magenta@yandex.ru", "yellow", "Alex");
         userClient.create(userData);
     }
     @Step("Send POST request to /api/auth/login to login user")
@@ -43,7 +43,7 @@ public class UpdateUserDataTest {
     }
     @Step("Send PATCH request to /api/auth/user without authorization")
     public Response sendPatchRequestWithoutAuth() {
-        userData = new UserData("kadabra@yandex.ru","063pancake063", "MARFA");
+        userData = new UserData("magenta@yandex.ru","063pancake063", "MARFA");
         return userClient.updateDataNoAuth(userData);
     }
     @Step("Check 200 status code for successful update")

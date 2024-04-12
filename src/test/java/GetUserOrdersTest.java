@@ -21,7 +21,7 @@ public class GetUserOrdersTest {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         orderClient = new OrderClient();
         userClient = new UserClient();
-        userData = new UserData("kadabra@yandex.ru", "magic", "Fiona");
+        userData = new UserData("magenta@yandex.ru", "yellow", "Alex");
         userClient.create(userData);
     }
 
