@@ -38,7 +38,6 @@ public class GetUserOrdersTest {
     }
     @Step("Send POST request to /api/orders to create order ")
     public Response sendPostRequestWithAuthToCreateOrder(String accessToken, OrderData orderData) {
-        orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         return orderClient.createWithAuth(accessToken, orderData);
     }
     @Step("Send GET request to /api/orders with authorization to get user orders")
@@ -81,6 +80,7 @@ public class GetUserOrdersTest {
     public void getUserOrdersWithAuthAndCheck200StatusCode() {
         Response loginResponse = sendPostRequestToLoginUser();
         String accessToken = getAccessToken(loginResponse);
+        orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         sendPostRequestWithAuthToCreateOrder(accessToken, orderData);
         Response response = sendGetRequestWithAuthToGetOrders(accessToken, userData);
         check200StatusCodeForSuccessfulGettingOrders(response);
@@ -92,6 +92,7 @@ public class GetUserOrdersTest {
     public void getUserOrdersNoAuthAndCheck401StatusCode() {
         Response loginResponse = sendPostRequestToLoginUser();
         String accessToken = getAccessToken(loginResponse);
+        orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         sendPostRequestWithAuthToCreateOrder(accessToken, orderData);
         Response response = sendGetRequestNoAuthToGetOrders(userData);
         check401StatusCodeForGetOrdersNoAuth(response);

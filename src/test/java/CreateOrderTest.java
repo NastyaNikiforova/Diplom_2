@@ -37,27 +37,22 @@ public class CreateOrderTest {
     }
     @Step("Send POST request to /api/orders with authorization and with ingredients to create order")
     public Response sendPostRequestWithAuthToCreateOrder(String accessToken, OrderData orderData) {
-        orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         return orderClient.createWithAuth(accessToken, orderData);
     }
     @Step("Send POST request to /api/orders without authorization and with ingredients to create order")
     public Response sendPostRequestWithoutAuthToCreateOrder(OrderData orderData) {
-        orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         return orderClient.createNoAuth(orderData);
     }
     @Step("Send POST request to /api/orders with authorization and without ingredients to create order")
     public Response sendPostRequestWithAuthNoIngredientsToCreateOrder(String accessToken, OrderData orderData) {
-        orderData = new OrderData(new String[]{});
         return orderClient.createWithAuth(accessToken, orderData);
     }
     @Step("Send POST request to /api/orders without authorization and without ingredients to create order")
     public Response sendPostRequestWithoutAuthNoIngredientsToCreateOrder(OrderData orderData) {
-        orderData = new OrderData(new String[]{});
         return orderClient.createNoAuth(orderData);
     }
     @Step("Send POST request to /api/orders with authorization and with invalid hash of ingredients")
     public Response sendPostRequestWithAuthAndInvalidHashIngredientsToCreateOrder(String accessToken, OrderData orderData) {
-        orderData = new OrderData(new String[]{"61c075738", "610000000000", "61c088888872"});
         return orderClient.createWithAuth(accessToken, orderData);
     }
     @Step("Check 200 status code for successful create order")
@@ -99,6 +94,7 @@ public class CreateOrderTest {
     public void createOrderWithAuthAndIngredientsAndCheck200StatusCode() {
         Response loginResponse = sendPostRequestToLoginUser();
         String accessToken = getAccessToken(loginResponse);
+        orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         Response orderResponse = sendPostRequestWithAuthToCreateOrder(accessToken, orderData);
         check200StatusCodeForSuccessfulCreateOrder(orderResponse);
         checkResponseBodyForCreateOrderWithAuth(orderResponse);
@@ -107,6 +103,7 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Create order without authorization and with ingredients and check 200 status code")
     public void createOrderWithoutAuthWithIngredientsAndCheck200StatusCode() {
+        orderData = new OrderData(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa72"});
         Response orderResponse = sendPostRequestWithoutAuthToCreateOrder(orderData);
         check200StatusCodeForSuccessfulCreateOrder(orderResponse);
         checkResponseBodyForCreateOrderWithoutAuth(orderResponse);
@@ -117,6 +114,7 @@ public class CreateOrderTest {
     public void createOrderWithAuthNoIngredientsAndCheck400StatusCode() {
         Response loginResponse = sendPostRequestToLoginUser();
         String accessToken = getAccessToken(loginResponse);
+        orderData = new OrderData(new String[]{});
         Response orderResponse = sendPostRequestWithAuthNoIngredientsToCreateOrder(accessToken, orderData);
         check400StatusCodeForCreateOrderWithoutIngredients(orderResponse);
         System.out.println(orderResponse.asPrettyString());
@@ -124,6 +122,7 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Create order without authorization and without ingredients and check 400 status code")
     public void createOrderWithoutAuthNoIngredientsAndCheck400StatusCode() {
+        orderData = new OrderData(new String[]{});
         Response orderResponse = sendPostRequestWithoutAuthNoIngredientsToCreateOrder(orderData);
         check400StatusCodeForCreateOrderWithoutIngredients(orderResponse);
         System.out.println(orderResponse.asPrettyString());
@@ -133,6 +132,7 @@ public class CreateOrderTest {
     public void createOrderWithAuthWithInvalidHashIngredientsAndCheck500StatusCode() {
         Response loginResponse = sendPostRequestToLoginUser();
         String accessToken = getAccessToken(loginResponse);
+        orderData = new OrderData(new String[]{"61c075738", "610000000000", "61c088888872"});
         Response orderResponse = sendPostRequestWithAuthAndInvalidHashIngredientsToCreateOrder(accessToken, orderData);
         check500StatusCodeForCreateOrderWithInvalidHashIngredients(orderResponse);
         System.out.println(orderResponse.asPrettyString());
